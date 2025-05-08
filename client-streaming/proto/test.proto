@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package test;
+
+option go_package = "./proto";
+
+service FileService {
+  rpc Upload(stream FileChunk) returns (UploadStatus);
+}
+
+message FileChunk {
+  string filename = 1;
+  bytes content = 2;
+}
+
+message UploadStatus {
+  bool success = 1;
+  string message = 2;
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package test;
+
+option go_package = "./proto";
+
+service FileService {
+  rpc Download(FileRequest) returns (stream FileChunk);
+}
+
+message FileRequest {
+  string filename = 1;
+}
+
+message FileChunk {
+  string filename = 1;
+  bytes content = 2;
+}
