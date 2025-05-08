@@ -4,23 +4,24 @@ import (
 	"context"
 	"fmt"
 	"net"
-	"test/simple/proto"
+
+	pb "github.com/guobinqiu/grpc-f4/simple/proto"
 
 	"google.golang.org/grpc"
 )
 
 type server struct {
-	proto.UnimplementedGreetServiceServer
+	pb.UnimplementedGreetingServiceServer
 }
 
-func (s *server) SayHello(ctx context.Context, req *proto.HelloRequest) (*proto.HelloReply, error) {
-	return &proto.HelloReply{Message: "Hello, " + req.Name}, nil
+func (s *server) SayHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloReply, error) {
+	return &pb.HelloReply{Message: "Hello, " + req.Name}, nil
 }
 
 func main() {
 	lis, _ := net.Listen("tcp", ":50051")
 	s := grpc.NewServer()
-	proto.RegisterGreetServiceServer(s, &server{})
+	pb.RegisterGreetingServiceServer(s, &server{})
 	fmt.Println("Server started on :50051")
 	s.Serve(lis)
 }

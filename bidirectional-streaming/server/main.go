@@ -4,16 +4,17 @@ import (
 	"fmt"
 	"io"
 	"net"
-	"test/bidirectional-streaming/proto"
+
+	pb "github.com/guobinqiu/grpc-f4/bidirectional-streaming/proto"
 
 	"google.golang.org/grpc"
 )
 
 type server struct {
-	proto.UnimplementedChatServiceServer
+	pb.UnimplementedChatServiceServer
 }
 
-func (s *server) Chat(stream proto.ChatService_ChatServer) error {
+func (s *server) Chat(stream pb.ChatService_ChatServer) error {
 	for {
 		msg, err := stream.Recv()
 		if err == io.EOF {
@@ -31,7 +32,7 @@ func (s *server) Chat(stream proto.ChatService_ChatServer) error {
 func main() {
 	lis, _ := net.Listen("tcp", ":50051")
 	s := grpc.NewServer()
-	proto.RegisterChatServiceServer(s, &server{})
+	pb.RegisterChatServiceServer(s, &server{})
 	fmt.Println("Server started on :50051")
 	s.Serve(lis)
 }

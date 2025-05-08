@@ -5,20 +5,21 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"test/client-streaming/proto"
+
+	"github.com/guobinqiu/grpc-f4/client-streaming/proto"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-func uploadFile(client proto.FileServiceClient, filePath string) {
-	file, _ := os.Open(filePath)
+func upload(client proto.FileServiceClient, filename string) {
+	file, _ := os.Open(filename)
 	defer file.Close()
 
+	// 客户端的 grpc Upload 方法
 	stream, _ := client.Upload(context.Background())
-	buf := make([]byte, 1024)
-	filename := filePath
 
+	buf := make([]byte, 1024)
 	for {
 		n, err := file.Read(buf)
 		if err == io.EOF {
@@ -38,5 +39,6 @@ func main() {
 	defer conn.Close()
 	client := proto.NewFileServiceClient(conn)
 
-	uploadFile(client, "test.txt")
+	// 文件上传成功后在server目录下生成test.txt
+	upload(client, "test.txt")
 }

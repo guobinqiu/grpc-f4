@@ -4,22 +4,25 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"test/bidirectional-streaming/proto"
 	"time"
 
+	pb "github.com/guobinqiu/grpc-f4/bidirectional-streaming/proto"
+
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
-	conn, _ := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	conn, _ := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	defer conn.Close()
-	client := proto.NewChatServiceClient(conn)
+
+	client := pb.NewChatServiceClient(conn)
 
 	stream, _ := client.Chat(context.Background())
 
 	go func() {
 		for _, txt := range []string{"hi", "how are you", "bye"} {
-			stream.Send(&proto.ChatMessage{User: "client", Text: txt})
+			stream.Send(&pb.ChatMessage{User: "client", Text: txt})
 			time.Sleep(time.Second)
 		}
 		stream.CloseSend()

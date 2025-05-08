@@ -4,7 +4,7 @@ package test;
 
 option go_package = "./proto";
 
-service GreetService {
+service GreetingService {
   rpc SayHello(HelloRequest) returns (HelloReply);
 }
 

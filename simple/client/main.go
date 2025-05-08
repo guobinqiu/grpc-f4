@@ -3,7 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"test/simple/proto"
+
+	pb "github.com/guobinqiu/grpc-f4/simple/proto"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -12,8 +13,9 @@ import (
 func main() {
 	conn, _ := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	defer conn.Close()
-	client := proto.NewGreetServiceClient(conn)
 
-	res, _ := client.SayHello(context.Background(), &proto.HelloRequest{Name: "Guobin"})
+	client := pb.NewGreetingServiceClient(conn)
+
+	res, _ := client.SayHello(context.Background(), &pb.HelloRequest{Name: "Guobin"})
 	fmt.Println(res.Message)
 }

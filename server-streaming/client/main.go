@@ -5,14 +5,17 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"test/server-streaming/proto"
+
+	pb "github.com/guobinqiu/grpc-f4/server-streaming/proto"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-func downloadFile(client proto.FileServiceClient, filename string) {
-	req := &proto.FileRequest{Filename: filename}
+func download(client pb.FileServiceClient, filename string) {
+	req := &pb.FileRequest{Filename: filename}
+
+	// 客户端的 grpc Download 方法
 	stream, _ := client.Download(context.Background(), req)
 
 	file, _ := os.Create(filename)
@@ -31,7 +34,8 @@ func downloadFile(client proto.FileServiceClient, filename string) {
 func main() {
 	conn, _ := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	defer conn.Close()
-	client := proto.NewFileServiceClient(conn)
+	client := pb.NewFileServiceClient(conn)
 
-	downloadFile(client, "test.txt")
+	// 文件下载成功后在client目录下生成test.txt
+	download(client, "test.txt")
 }

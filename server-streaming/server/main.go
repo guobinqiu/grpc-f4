@@ -5,16 +5,17 @@ import (
 	"io"
 	"net"
 	"os"
-	"test/server-streaming/proto"
+
+	pb "github.com/guobinqiu/grpc-f4/server-streaming/proto"
 
 	"google.golang.org/grpc"
 )
 
 type server struct {
-	proto.UnimplementedFileServiceServer
+	pb.UnimplementedFileServiceServer
 }
 
-func (s *server) Download(req *proto.FileRequest, stream proto.FileService_DownloadServer) error {
+func (s *server) Download(req *pb.FileRequest, stream pb.FileService_DownloadServer) error {
 	file, err := os.Open(req.Filename)
 	if err != nil {
 		return err
@@ -27,7 +28,7 @@ func (s *server) Download(req *proto.FileRequest, stream proto.FileService_Downl
 		if err == io.EOF {
 			break
 		}
-		stream.Send(&proto.FileChunk{Content: buf[:n]})
+		stream.Send(&pb.FileChunk{Content: buf[:n]})
 	}
 	return nil
 }
@@ -35,7 +36,7 @@ func (s *server) Download(req *proto.FileRequest, stream proto.FileService_Downl
 func main() {
 	lis, _ := net.Listen("tcp", ":50051")
 	s := grpc.NewServer()
-	proto.RegisterFileServiceServer(s, &server{})
+	pb.RegisterFileServiceServer(s, &server{})
 	fmt.Println("Server started on :50051")
 	s.Serve(lis)
 }
