@@ -2,6 +2,10 @@
 
 注意都是后端对后端
 
+## 安装
+
+> https://github.com/guobinqiu/grpc-exercise/tree/master/go-as-serverside#go-as-server-side
+
 ## 4种模式
 
 ### 1. 请求-响应 (simple RPC)
@@ -25,7 +29,3 @@
 如果客户端是`浏览器`用`websocket`代替
 
 > https://github.com/guobinqiu/vue2-go-websocket-protobuf-demo
-
-## 安装
-
-> https://github.com/guobinqiu/grpc-exercise/tree/master/go-as-serverside#go-as-server-side
