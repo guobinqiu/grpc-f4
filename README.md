@@ -18,8 +18,14 @@
 
 如果客户端是浏览器用SSE代替
 
-### 4. 双向推流 (bidirectional streaming RPC)
+### 4. 双向推流 (bidirectional streaming RPC 全双工)
 
 聊天、音视频通话
 
 如果客户端是浏览器用websocket代替
+
+> https://github.com/guobinqiu/vue2-go-websocket-protobuf-demo
+
+## 安装
+
+> https://github.com/guobinqiu/grpc-exercise/tree/master/go-as-serverside#go-as-server-side

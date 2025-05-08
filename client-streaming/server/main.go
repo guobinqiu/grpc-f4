@@ -36,7 +36,7 @@ type server struct {
 	}
 
 我们要在父类里重写该方法
-它是在客户端调用了客户端upload方法后由grpc框架内部去调的它 你只要负责实现它就好
+它是在客户端调用了客户端Upload方法后由grpc框架内部去调的它 你只要负责实现它就好
 */
 func (s *server) Upload(stream pb.FileService_UploadServer) error {
 	var file *os.File

@@ -18,6 +18,7 @@ func main() {
 
 	client := pb.NewChatServiceClient(conn)
 
+	// 客户端的 grpc Chat 方法
 	stream, _ := client.Chat(context.Background())
 
 	go func() {

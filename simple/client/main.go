@@ -16,6 +16,8 @@ func main() {
 
 	client := pb.NewGreetingServiceClient(conn)
 
+	// 客户端的 grpc SayHello 方法
 	res, _ := client.SayHello(context.Background(), &pb.HelloRequest{Name: "Guobin"})
+
 	fmt.Println(res.Message)
 }

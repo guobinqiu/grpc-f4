@@ -11,10 +11,33 @@ import (
 	"google.golang.org/grpc"
 )
 
+/*
+子类 由grpc自动生成
+type UnimplementedFileServiceServer struct {
+}
+*/
+
+// 父类 由我们自定义 开闭原则 对扩展开放、对修改关闭
 type server struct {
-	pb.UnimplementedFileServiceServer
+	pb.UnimplementedFileServiceServer // 匿名嵌套 让父类拥有子类的方法和属性
 }
 
+/*
+type server struct {
+	inner pb.UnimplementedFileServiceServer // 具名嵌套
+}
+*/
+
+/*
+子类方法以placeholder的形式出现
+
+	func (UnimplementedFileServiceServer) Download(*FileRequest, FileService_DownloadServer) error {
+		return status.Errorf(codes.Unimplemented, "method Download not implemented")
+	}
+
+我们要在父类里重写该方法
+它是在客户端调用了客户端Download方法后由grpc框架内部去调的它 你只要负责实现它就好
+*/
 func (s *server) Download(req *pb.FileRequest, stream pb.FileService_DownloadServer) error {
 	file, err := os.Open(req.Filename)
 	if err != nil {
