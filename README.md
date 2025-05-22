@@ -26,6 +26,4 @@
 
 聊天、音视频通话
 
-如果客户端是`浏览器/手机app`用`WebSocket`代替
-
-> https://github.com/guobinqiu/vue2-go-websocket-protobuf-demo
+如果客户端是`浏览器/手机app`用[WebSocket](https://github.com/guobinqiu/vue2-go-websocket-protobuf-demo)代替
