@@ -20,12 +20,12 @@
 
 文件下载、数据下发 
 
-如果客户端是`浏览器`用`SSE`代替
+如果客户端是`浏览器/手机app`用`SSE`代替
 
 ### 4. 双向推流 (bidirectional streaming RPC 全双工)
 
 聊天、音视频通话
 
-如果客户端是`浏览器`用`websocket`代替
+如果客户端是`浏览器/手机app`用`WebSocket`代替
 
 > https://github.com/guobinqiu/vue2-go-websocket-protobuf-demo
